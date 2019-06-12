@@ -46,6 +46,7 @@ jobs:
           paths:
               - .sfdx/*
               - project/*
+  
   deploy_source:
   # This deploys the source to the ci scratch org.
     <<: *defaults
@@ -54,8 +55,9 @@ jobs:
           at: ~/
       - run:
           name: Push Source
-          command: |
-             node_modules/sfdx-cli/bin/run force:source:push -u ciorg
+          command: . build/deploy_source.sh
+             
+  
   create_and_test_package:
     <<: *defaults
     steps:
@@ -76,8 +78,8 @@ jobs:
           at: ~/
       - run:
           name: Run Apex Tests
-          command: |
-              node_modules/sfdx-cli/bin/run force:apex:test:run -u ciorg -c -r human
+          command: . build/run_apex_test.sh
+  
   cleanup_scratch_org:
     <<: *defaults
     steps:
@@ -85,8 +87,7 @@ jobs:
           at: ~/
       - run:
           name: Clean Up
-          command: |
-              node_modules/sfdx-cli/bin/run force:org:delete -u ciorg -p
+          command: . build/delete_scratch_org.sh
 
 workflows:
   version: 2
