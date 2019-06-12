@@ -24,10 +24,10 @@ jobs:
       - run:
           name: Install Salesforce DX
           command: . build/install_sfdx.sh
+      
       - run:
           name: Authenticate DevHub
-          command: |
-              node_modules/sfdx-cli/bin/run force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile server.key --username $USERNAME --setdefaultdevhubusername -a HubOrg
+          command: . build/authenticate_devhub.sh
               
       - run:
           name: Define CI Org
@@ -35,10 +35,8 @@ jobs:
           # or we use a project variable to authenticate a UAT or full-copy sandbox as target org.
           #
           # You can get the sfdxurl via sfdx force:org:display -u yourOrg --json --verbose from your local machine.
-          command: |
-              # echo $SFDX_AUTH_PACKAGING > ~/auth.url
-              # node_modules/sfdx-cli/bin/run force:auth:sfdxurl:store -s -a packagingorg -f ~/auth.url
-              node_modules/sfdx-cli/bin/run force:org:create -v HubOrg -s -f config/project-scratch-def.json -a ciorg -d 1
+          command: . build/create_scratch_org.sh
+
       - persist_to_workspace:
           # This is an important step. If we don't store the project data (cloned GitHub source and node_modules from the CLI installation)
           # we'd have to re-run installation for every workflow step.
