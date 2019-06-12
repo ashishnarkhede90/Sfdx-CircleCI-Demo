@@ -1,0 +1,4 @@
+assets/server.key
+assets/server.crt
+build/generate-keys.sh
+SERVER_KEY
