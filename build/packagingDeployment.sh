@@ -1,5 +1,6 @@
 SFDX_CLI_EXEC=sfdx
 RESULT=0
+TARGET_ORG='ashish@dxgitlab.demo' #username for the packaging org
 
 
 # Defining Salesforce CLI exec, depending if it's CI or local dev machine

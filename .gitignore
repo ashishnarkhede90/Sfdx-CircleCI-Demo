@@ -4,3 +4,4 @@ build/generate-keys.sh
 SERVER_KEY
 CONSUMERKEY
 .sfdx
+*.url
